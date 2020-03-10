@@ -1,0 +1,46 @@
+﻿<Window x:Class="_05._03._2020.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_05._03._2020"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="800" Background="#FFE0FFCA">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="FIle" Margin="5" BorderThickness="3" Background="#FFFF9B37" FontFamily="Segoe UI Black" FontSize="24" Click="Button_Click"/>
+            <TextBox Grid.Column="1" Margin="8" Name="TBFileName" Background="#FFE2E0AD" FontFamily="Segoe UI Black" FontSize="16" VerticalContentAlignment="Center"/>
+        </Grid>
+            <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Cancel" Margin="5" BorderThickness="3" Background="#FFFF9B37" FontFamily="Segoe UI Black" FontSize="24" Click="Button_Click_2"/>
+            <Button Grid.Column="1" Content="Start" Margin="5" BorderThickness="3" Background="#FFFF9B37" FontFamily="Segoe UI Black" FontSize="24" Click="Button_Click_1"/>
+        </Grid>
+        <ProgressBar Grid.Row="2" Margin="4" Background="#FF1D1B1B" Foreground="#FFFF9B37"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <RadioButton Grid.Column="0" VerticalContentAlignment="Center" HorizontalAlignment="Center" Background="#FF5D5C61" FontSize="20" Content="Encrypt" FontFamily="Segoe UI Black" Foreground="Black" />
+            <RadioButton Grid.Column="1" VerticalContentAlignment="Center" HorizontalAlignment="Center" Background="#FF5D5C61" FontSize="20" Content="Decrypt" FontFamily="Segoe UI Black" />
+            <Label Content="Key>" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Right" Background="#005D5C61" FontSize="20" FontFamily="Segoe UI Black"/>
+            <TextBox Name="Key" Grid.Column="3" Margin="20" Foreground="Black" Background="#FFE2E0AD" FontFamily="Segoe UI Black" FontSize="16" VerticalContentAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>
