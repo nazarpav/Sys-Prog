@@ -30,18 +30,17 @@ namespace _04._03._2020
             ParameterizedThreadStart T3 = new ParameterizedThreadStart(SimplNums);
 
             thread1 = new Thread(T1);
-            thread1.Start(new Param("Fibonachi",int.MaxValue,100));
+            thread1.Start(new Param("Fibonachi", int.MaxValue, 500));
             thread2 = new Thread(T2);
-            thread2.Start(new Param("Facktorial", int.MaxValue, 100));
-            //thread3 = new Thread(T3);
-            //thread1.Start(new Param("SimpleNums", int.MaxValue, 100));
+            thread2.Start(new Param("Facktorial", int.MaxValue, 500));
+            thread3 = new Thread(T3);
+            thread3.Start(new Param("SimpleNums", int.MaxValue, 500));
 
         }
         public void FibonachiNums(object o)
         {
-            int count = 0;
-            int oldNum=1;
-            int newNum=1;
+            int oldNum = 1;
+            int newNum = 1;
             long res;
             while (true)
             {
@@ -51,7 +50,6 @@ namespace _04._03._2020
                 oldNum = newNum;
                 newNum = (int)res;
                 Dispatcher.Invoke(() => Fib.Items.Add(res));
-                Dispatcher.Invoke(() => Fib.Items.Add(count++));
             }
         }
         public void FacktorialNums(object o)
@@ -69,64 +67,123 @@ namespace _04._03._2020
                 Dispatcher.Invoke(() => Fakt.Items.Add(res));
             }
         }
+        /*
+         bool prost = true;
+            Console.WriteLine("Введите число\n");
+            int n =int.Parse(Console.ReadLine());
+            for (int i = 2; i <= n / 2; i++)
+            {
+                if (n % i == 0)
+                {
+                    prost = false;
+                    break;
+                }
+            }
+            if (prost)
+            {
+                Console.WriteLine("Число простое");
+            }
+            else
+            {
+                Console.WriteLine("Число не простое");
+            }
+             */
         public void SimplNums(object o)
         {
-            for (int i = 0; i < int.MaxValue; i++)
+            bool flag = false;
+            for (long i = 2; i <= int.MaxValue; i++)
             {
-
+                Thread.Sleep(((Param)o).Delay);
+                flag = false;
+                for (int h = 2; h <= Math.Sqrt(i); h++)
+                {
+                    if(i%h==0)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if(!flag)
+                {
+                    Dispatcher.Invoke(() => Simpl.Items.Add(i));
+                }
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (thread1 == null) return;
-            if(thread1.ThreadState == ThreadState.Suspended)
+            try
             {
-                b1.Content = "Start";
-                thread1.Resume();
+                if (thread1 == null) return;
+                if (thread1.ThreadState == ThreadState.Suspended)
+                {
+                    b1.Content = "Pause";
+                    thread1.Resume();
+                }
+                else if (thread1.ThreadState == ThreadState.WaitSleepJoin)
+                {
+                    b1.Content = "Start";
+                    thread1.Suspend();
+                }
             }
-            else if (thread1.ThreadState == ThreadState.WaitSleepJoin)
+            catch
             {
-                b1.Content = "Pause";
-                thread1.Suspend();
+
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (thread1 == null) return;
-            if (thread1.ThreadState == ThreadState.Suspended)
+            try
             {
-                b2.Content = "Start";
-                thread2.Resume();
+                if (thread2 == null) return;
+                if (thread2.ThreadState == ThreadState.Suspended)
+                {
+                    b2.Content = "Pause";
+                    thread2.Resume();
+                }
+                else if (thread1.ThreadState == ThreadState.WaitSleepJoin)
+                {
+                    b2.Content = "Start";
+                    thread2.Suspend();
+                }
             }
-            else if (thread1.ThreadState == ThreadState.WaitSleepJoin)
+            catch
             {
-                b2.Content = "Pause";
-                thread2.Suspend();
+
             }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (thread1 == null) return;
-            if (thread1.ThreadState == ThreadState.Suspended)
+            try
             {
-                b3.Content = "Start";
-                thread3.Resume();
+                if (thread3 == null) return;
+                if (thread3.ThreadState == ThreadState.Suspended)
+                {
+                    b3.Content = "Pause";
+                    thread3.Resume();
+                }
+                else if (thread1.ThreadState == ThreadState.WaitSleepJoin)
+                {
+                    b3.Content = "Start";
+                    thread3.Suspend();
+                }
             }
-            else if (thread1.ThreadState == ThreadState.WaitSleepJoin)
+            catch
             {
-                b3.Content = "Pause";
-                thread3.Suspend();
+
             }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            thread1.Abort();
-            thread2.Abort();
-            thread3.Abort();
+            if (thread1 != null && thread1.ThreadState != ThreadState.Suspended)
+                thread1?.Abort();
+            if (thread2 != null&& thread2.ThreadState!= ThreadState.Suspended)
+                thread2?.Abort();
+            if (thread3 != null && thread3.ThreadState != ThreadState.Suspended)
+                thread3?.Abort();
         }
     }
     class Param

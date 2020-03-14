@@ -39,7 +39,6 @@ namespace _04._03._2020
         }
         public void FibonachiNums(object o)
         {
-            int count = 0;
             int oldNum=1;
             int newNum=1;
             long res;
@@ -51,7 +50,6 @@ namespace _04._03._2020
                 oldNum = newNum;
                 newNum = (int)res;
                 Dispatcher.Invoke(() => Fib.Items.Add(res));
-                Dispatcher.Invoke(() => Fib.Items.Add(count++));
             }
         }
         public void FacktorialNums(object o)
