@@ -1,0 +1,32 @@
+﻿<Window x:Class="qwe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qwe"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <Button Grid.Column="0"  FontFamily="Moire ExtraBold" FontSize="14" Content="End" Background="#FFFF4B4B" Click="Button_Click"/>
+        <Button Grid.Column="1" FontFamily="Moire ExtraBold" FontSize="14" Content="Info" Background="#FFD4AA18" Click="Button_Click_1"/>
+        <TextBox Grid.Column="2" Grid.ColumnSpan="2" Background="#FF97EA51" Name="ProcesPath"/>
+        <Button Grid.Column="4" FontFamily="Moire ExtraBold" FontSize="14" Content="START" Background="#FF4E3EEE" Click="Button_Click_2"/>
+
+        <DataGrid Name="DG" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" ItemsSource="{Binding Item}" SelectedItem="{Binding SelectedItem}"/>
+
+    </Grid>
+</Window>
