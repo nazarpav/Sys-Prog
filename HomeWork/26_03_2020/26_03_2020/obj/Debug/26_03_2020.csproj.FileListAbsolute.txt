@@ -1,0 +1,6 @@
+E:\SystemPrograming\HomeWork\26_03_2020\26_03_2020\bin\Debug\26_03_2020.exe.config
+E:\SystemPrograming\HomeWork\26_03_2020\26_03_2020\bin\Debug\26_03_2020.exe
+E:\SystemPrograming\HomeWork\26_03_2020\26_03_2020\bin\Debug\26_03_2020.pdb
+E:\SystemPrograming\HomeWork\26_03_2020\26_03_2020\obj\Debug\26_03_2020.csprojAssemblyReference.cache
+E:\SystemPrograming\HomeWork\26_03_2020\26_03_2020\obj\Debug\26_03_2020.exe
+E:\SystemPrograming\HomeWork\26_03_2020\26_03_2020\obj\Debug\26_03_2020.pdb
