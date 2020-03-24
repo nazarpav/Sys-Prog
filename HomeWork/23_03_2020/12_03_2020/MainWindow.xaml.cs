@@ -21,9 +21,13 @@ namespace _12_03_2020
     public partial class MainWindow : Window
     {
         Task task1;
+        CancellationTokenSource cts;
+        CancellationToken token;
         public MainWindow()
         {
             InitializeComponent();
+            cts = new CancellationTokenSource();
+            token = cts.Token;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -49,14 +53,16 @@ namespace _12_03_2020
         {
             try
             {
+                cts = new CancellationTokenSource();
+                token = cts.Token;
                 int q = 0;
                 if (!int.TryParse(QuantityCopies.Text, out q))
                 {
                     System.Windows.MessageBox.Show("Error QuantityCopies type");
+                    return;
                 }
                 ProgBar.Maximum = q;
-                task1 = new Task(() => FCopy());
-                task1.Start();
+                task1 = Task.Run(() => FCopy(), cts.Token);
             }
             catch
             {
@@ -67,9 +73,22 @@ namespace _12_03_2020
         {
             for (int i = 0; i < Dispatcher.Invoke(() => (int)ProgBar.Maximum); i++)
             {
-                Thread.Sleep(500);
+                if (Dispatcher.Invoke(() => token.IsCancellationRequested))
+                {
+                    Console.WriteLine("Stoped");
+                    Dispatcher.Invoke(() => ProgBar.Value = 0);
+                    return;
+                }
+                Thread.Sleep(70);
                 Dispatcher.Invoke(() => ProgBar.Value++);
-                File.Copy(Dispatcher.Invoke(() => From.Text), Dispatcher.Invoke(() => To.Text) + Revers_(GetFileName()));
+                try
+                {
+                    File.Copy(Dispatcher.Invoke(() => From.Text), Dispatcher.Invoke(() => To.Text) + Revers_(GetFileName()));
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() => ProgBar.Value = 0);
+                }
             }
             EndParallel();
         }
@@ -93,11 +112,11 @@ namespace _12_03_2020
             Random rnd = new Random();
             foreach (var i in Dispatcher.Invoke(() => From.Text).Reverse())
             {
+                FName += i;
                 if (i == '.')
                 {
                     FName += rnd.Next(int.MinValue, int.MaxValue);
                 }
-                FName += i;
                 if (i == '/' || i.ToString() == @"\")
                 {
                     return FName;
@@ -108,8 +127,12 @@ namespace _12_03_2020
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            task1.Dispose();
-            Dispatcher.Invoke(() => ProgBar.Value = 0);
+            if (task1?.Status == TaskStatus.Running)
+            {
+                cts.Cancel();
+                cts.Dispose();
+                Dispatcher.Invoke(() => ProgBar.Value = 0);
+            }
         }
     }
 }
