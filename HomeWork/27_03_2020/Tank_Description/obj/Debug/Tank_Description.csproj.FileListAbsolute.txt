@@ -1,0 +1,4 @@
+E:\SystemPrograming\HomeWork\27_03_2020\Tank_Description\bin\Debug\Tank_Description.dll
+E:\SystemPrograming\HomeWork\27_03_2020\Tank_Description\bin\Debug\Tank_Description.pdb
+E:\SystemPrograming\HomeWork\27_03_2020\Tank_Description\obj\Debug\Tank_Description.dll
+E:\SystemPrograming\HomeWork\27_03_2020\Tank_Description\obj\Debug\Tank_Description.pdb
