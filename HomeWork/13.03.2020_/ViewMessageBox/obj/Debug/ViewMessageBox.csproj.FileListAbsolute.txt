@@ -1,0 +1,8 @@
+E:\SystemPrograming\ClassWork\03.03.2020_\ViewMessageBox\bin\Debug\ViewMessageBox.dll
+E:\SystemPrograming\ClassWork\03.03.2020_\ViewMessageBox\bin\Debug\ViewMessageBox.pdb
+E:\SystemPrograming\ClassWork\03.03.2020_\ViewMessageBox\obj\Debug\ViewMessageBox.dll
+E:\SystemPrograming\ClassWork\03.03.2020_\ViewMessageBox\obj\Debug\ViewMessageBox.pdb
+E:\SystemPrograming\HomeWork\13.03.2020_\ViewMessageBox\bin\Debug\ViewMessageBox.dll
+E:\SystemPrograming\HomeWork\13.03.2020_\ViewMessageBox\bin\Debug\ViewMessageBox.pdb
+E:\SystemPrograming\HomeWork\13.03.2020_\ViewMessageBox\obj\Debug\ViewMessageBox.dll
+E:\SystemPrograming\HomeWork\13.03.2020_\ViewMessageBox\obj\Debug\ViewMessageBox.pdb

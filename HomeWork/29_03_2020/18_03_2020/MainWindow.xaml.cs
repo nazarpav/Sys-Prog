@@ -19,9 +19,12 @@ namespace _18_03_2020
 {
     public partial class MainWindow : Window
     {
+        ParameterizedThreadStart PStart;
+        Thread t;
         public MainWindow()
         {
             InitializeComponent();
+            PStart = new ParameterizedThreadStart(LoadSubKeys);
             ReadReg();
         }
         public void ReadReg()
@@ -47,20 +50,23 @@ namespace _18_03_2020
         }
         private void LoadSubKeys(object tvi)
         {
-            RegistryKey key = ((tvi as TreeViewItem).Header) as RegistryKey;
-            foreach (var name in key.GetSubKeyNames())
-            {
-                TreeViewItem subItems = new TreeViewItem();
-                subItems.IsExpanded = false;
-                try
+            TreeViewItem newTvi = Dispatcher.Invoke(() => tvi) as TreeViewItem;
+            RegistryKey key = Dispatcher.Invoke(() => newTvi.Header) as RegistryKey;
+                foreach (var name in key.GetSubKeyNames())
                 {
+                    TreeViewItem subItems = new TreeViewItem();
+                    subItems.IsExpanded = false;
                     subItems.Header = key.OpenSubKey(name);
+                    subItems.Expanded += Tvi_Expanded;
+                    //Thread.Sleep(50);
+                    Dispatcher.Invoke(() => newTvi.Items.Add(subItems));
+
                 }
-                catch
-                {
-                }
-                subItems.Expanded += Tvi_Expanded;
-                ((TreeViewItem)tvi).Items.Add(subItems);
+            try
+            {
+            }
+            catch
+            {
             }
         }
         private void Tvi_Expanded(object sender, RoutedEventArgs e)
@@ -68,14 +74,16 @@ namespace _18_03_2020
             var item = (sender as TreeViewItem);
             foreach (TreeViewItem sub in item.Items)
             {
-                LoadSubKeys(sub);
+                t?.Abort();
+                t = new Thread(PStart);
+                t.SetApartmentState(ApartmentState.STA);
+                t.Start(sub);
             }
         }
 
-        private void TW_MouseEnter(object sender, MouseEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var tvi = (TreeViewItem)sender;
-            tvi.Name
+            t?.Abort();
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿<Window x:Class="nazar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:nazar"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="#FF001429">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Button Click="Button_Click" Content="Select Lib" Background="#FF8BFF3A" Grid.Row="0" Grid.Column="0" Margin="5" FontSize="16" FontFamily="Segoe UI Black"/>
+        <ListView Grid.Row="1" Grid.Column="0" Name="LBMInFOO" Background="#FFB8B8B8" FontSize="16" FontFamily="Segoe UI Black"/>
+        <Label Content="" Name="LibName" Grid.Row="0" Grid.Column="1" Margin="5" FontSize="16" FontFamily="Segoe UI Black" Background="#FFD8F7AA"/>
+        <Button Content="Invoke!" Grid.Column="0" Grid.Row="2" Margin="5" Name="InvokeB" Background="#FFFF4040" FontSize="16" FontFamily="Segoe UI Black" Click="InvokeB_Click"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Classes" Grid.Row="0" Grid.Column="0" Background="#FF73ACFF" VerticalContentAlignment="Center" FontSize="16" FontFamily="Segoe UI Black" HorizontalContentAlignment="Center" Margin="5"/>
+            <Label Content="Methods" Grid.Row="0" Grid.Column="1" Background="#FF73FF8C" VerticalContentAlignment="Center" FontSize="16" FontFamily="Segoe UI Black" HorizontalContentAlignment="Center" Margin="5"/>
+            <ComboBox Grid.Row="1" Grid.Column="0" Margin="5" Background="Black" Name="ClassesComboBox"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" Background="#FFFF2626" Name="MethodsComboBox"/>
+        </Grid>
+        <TextBox Text="Namespace" Name="Namespace"  Grid.Row="2" Grid.Column="1" Margin="5" FontSize="16" FontFamily="Segoe UI Black" Background="#FFD8F7AA"/>
+    </Grid>
+</Window>
