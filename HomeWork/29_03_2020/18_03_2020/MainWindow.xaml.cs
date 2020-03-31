@@ -59,8 +59,8 @@ namespace _18_03_2020
                     subItems.Header = key.OpenSubKey(name);
                     subItems.Expanded += Tvi_Expanded;
                     //Thread.Sleep(50);
-                    Dispatcher.Invoke(() => newTvi.Items.Add(subItems));
-
+                    //this.Dispatcher
+                    this.Dispatcher.BeginInvoke(new Action(()=> newTvi.Items.Add(subItems)) );
                 }
             try
             {
