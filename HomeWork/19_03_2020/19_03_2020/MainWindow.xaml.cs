@@ -27,6 +27,10 @@ namespace _19_03_2020
             N2 = 1;
             EvenCount = 0;
         }
+        public override string ToString()
+        {
+            return "N1 = " + N1 + " | N2 = " + N2 + " |    | EvenCount = " + EvenCount;
+        }
     }
     public partial class MainWindow : Window
     {
@@ -43,27 +47,20 @@ namespace _19_03_2020
                 Monitor.Enter(FC);
                 try
                 {
-                    
-                    (state as ListView).Items.Add(FC.EvenCount);
-                }
-                finally
-                {
-                    Monitor.Exit(FC);
-                }
-            }
-        }
-        private void CalculateFCEvenNums(object state)
-        {
-            for (int i = 0; i < QUANTITY_ITERATIONS; i++)
-            {
-                Monitor.Enter(FC);
-                try
-                {
-                    if (FC.N1 % 2 == 0 || FC.N2 % 2 == 0)
+                    long tmp = FC.N1 + FC.N2;
+                    if (tmp > int.MaxValue)
+                    {
+                        MessageBox.Show("Out of range");
+                        Monitor.Exit(FC);
+                        return;
+                    }
+                    FC.N1 = FC.N2;
+                    FC.N2 = (int)tmp;
+                    if (FC.N2 % 2 == 0)
                     {
                         ++FC.EvenCount;
                     }
-                    (state as ListView).Items.Add(FC.EvenCount);
+                    Dispatcher.Invoke(()=>DG.Items.Add(i+"  =+=  "+FC));
                 }
                 finally
                 {
@@ -71,16 +68,13 @@ namespace _19_03_2020
                 }
             }
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FC = new FibonacciCounter();
-            N1.Items.Clear();
-            N2.Items.Clear();
-            EvenCount.Items.Clear();
-            ThreadPool.QueueUserWorkItem(CalculateFCNums,N1);
-            ThreadPool.QueueUserWorkItem(CalculateFCNums,N2);
-            ThreadPool.QueueUserWorkItem(CalculateFCEvenNums,EvenCount);
+            DG.Items.Clear();
+            ThreadPool.QueueUserWorkItem(CalculateFCNums);
+            ThreadPool.QueueUserWorkItem(CalculateFCNums);
+            ThreadPool.QueueUserWorkItem(CalculateFCNums);
         }
     }
 }

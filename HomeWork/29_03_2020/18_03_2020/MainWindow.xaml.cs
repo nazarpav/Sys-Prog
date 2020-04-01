@@ -50,24 +50,26 @@ namespace _18_03_2020
         }
         private void LoadSubKeys(object tvi)
         {
-            TreeViewItem newTvi = Dispatcher.Invoke(() => tvi) as TreeViewItem;
-            RegistryKey key = Dispatcher.Invoke(() => newTvi.Header) as RegistryKey;
-                foreach (var name in key.GetSubKeyNames())
+            TreeViewItem _tvi = Dispatcher.Invoke(() => tvi) as TreeViewItem;
+            RegistryKey key = Dispatcher.Invoke(() => _tvi.Header) as RegistryKey;
+            foreach (var name in key.GetSubKeyNames())
+            {
+                Dispatcher.Invoke(() =>
                 {
-                    TreeViewItem subItems = new TreeViewItem();
-                    subItems.IsExpanded = false;
-                    subItems.Header = key.OpenSubKey(name);
-                    subItems.Expanded += Tvi_Expanded;
-                    //Thread.Sleep(50);
-                    //this.Dispatcher
-                    this.Dispatcher.BeginInvoke(new Action(()=> newTvi.Items.Add(subItems)) );
-                }
+                    TreeViewItem newTvi = new TreeViewItem();
+                    newTvi.IsExpanded = false;
+                    newTvi.Header = key.OpenSubKey(name);
+                    //newTvi.Expanded += Tvi_Expanded;
+                    _tvi.Items.Add(newTvi);
+                });
+            }
             try
             {
             }
             catch
             {
             }
+
         }
         private void Tvi_Expanded(object sender, RoutedEventArgs e)
         {
