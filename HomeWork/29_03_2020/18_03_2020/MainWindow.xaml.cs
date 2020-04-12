@@ -50,24 +50,36 @@ namespace _18_03_2020
         }
         private void LoadSubKeys(object tvi)
         {
-            TreeViewItem _tvi = Dispatcher.Invoke(() => tvi) as TreeViewItem;
-            RegistryKey key = Dispatcher.Invoke(() => _tvi.Header) as RegistryKey;
-            foreach (var name in key.GetSubKeyNames())
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    TreeViewItem newTvi = new TreeViewItem();
-                    newTvi.IsExpanded = false;
-                    newTvi.Header = key.OpenSubKey(name);
-                    //newTvi.Expanded += Tvi_Expanded;
-                    _tvi.Items.Add(newTvi);
-                });
-            }
             try
             {
+                TreeViewItem _tvi = Dispatcher.Invoke(() => tvi) as TreeViewItem;
+                RegistryKey key = Dispatcher.Invoke(() => _tvi.Header) as RegistryKey;
+                foreach (var name in key.GetSubKeyNames())
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        TreeViewItem newTvi = new TreeViewItem();
+                        newTvi.IsExpanded = false;
+                        try
+                        {
+                            newTvi.Header = key.OpenSubKey(name);
+                        }
+                        catch
+                        {
+
+                        }
+                        newTvi.Expanded += Tvi_Expanded;
+                        //if (!_tvi.Items.Contains(newTvi))
+                        //{
+                        //    _tvi.Items.Add(newTvi);
+                        //}
+                        _tvi.Items.Add(newTvi);
+                    });
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
             }
 
         }
@@ -76,16 +88,24 @@ namespace _18_03_2020
             var item = (sender as TreeViewItem);
             foreach (TreeViewItem sub in item.Items)
             {
-                t?.Abort();
-                t = new Thread(PStart);
-                t.SetApartmentState(ApartmentState.STA);
-                t.Start(sub);
+                Task.Run(() => LoadSubKeys(sub));
             }
+            item.Expanded -= Tvi_Expanded;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             t?.Abort();
+        }
+
+        private void TW_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem tvi = (TreeViewItem)TW.SelectedItem;
+            string val = "Name: " + ((RegistryKey)tvi.Header).Name;
+            string name = val;
+            val += " || Value: " + ((RegistryKey)tvi.Header).GetValue(name, "???");
+            LV.Items.Clear();
+            LV.Items.Add(val);
         }
     }
 }
